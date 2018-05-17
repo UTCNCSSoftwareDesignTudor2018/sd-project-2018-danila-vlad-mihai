@@ -1,6 +1,6 @@
 DANILA VLAD-MIHAI
 
--> Layers + MVC
+-> 	Layers + MVC
 
 ->	Observer DP: DonorService - Subject, PatientController Observer. A patient is notified when a donor with compatible blood group is available
 	
@@ -9,8 +9,16 @@ DANILA VLAD-MIHAI
 	Builder DP: Make Patient and Donor creation more flexible.
 
 ->	Many-to-Many: addresses & accounts
+
 	One-to-Many: blood_banks & donors
+	
 	One-to-One: accounts & logins, accounts & donors, accounts & patients
 	
-->	Spring, Hibernate, Maven, Junit 
+->	Spring, Hibernate, Maven
+
+	Integration testing: Junit
+	
+	Unit tests: Mockito + JUnit
+	
+	Input validation: validation classes
 	
