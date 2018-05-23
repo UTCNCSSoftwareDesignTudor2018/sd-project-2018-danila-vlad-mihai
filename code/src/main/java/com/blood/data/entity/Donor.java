@@ -1,5 +1,7 @@
 package com.blood.data.entity;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,7 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Fetch;
@@ -35,23 +37,21 @@ public class Donor {
 	@JoinColumn(name = "bloodbank_id")
 	private BloodBank bloodBank;
 
-	@OneToOne(fetch = FetchType.EAGER)
-	@Fetch(FetchMode.JOIN)
-	@JoinColumn(name = "donor_id")
-    private Account account;
+	@OneToMany(mappedBy = "donor", fetch = FetchType.EAGER)
+	private List<Account> accounts;
 	
 	public Donor() {
 	}
 
 	public Donor(int donorId, String donorFirstname, String donorLastname, String donorAvailability,
-			BloodBank bloodBank, Account account) {
+			BloodBank bloodBank, List<Account> accounts) {
 		super();
 		this.donorId = donorId;
 		this.donorFirstname = donorFirstname;
 		this.donorLastname = donorLastname;
 		this.donorAvailability = donorAvailability;
 		this.bloodBank = bloodBank;
-		this.account = account;
+		this.accounts = accounts;
 	}
 
 	public int getDonorId() {
@@ -94,21 +94,18 @@ public class Donor {
 		this.bloodBank = bloodBank;
 	}
 
-	public Account getAccount() {
-		return account;
+	public List<Account> getAccounts() {
+		return accounts;
 	}
 
-	public void setAccount(Account account) {
-		this.account = account;
+	public void setAccounts(List<Account> accounts) {
+		this.accounts = accounts;
 	}
-
-	
 
 	@Override
 	public String toString() {
-		return "Donor [donorId=" + donorId + ", donorFirstname=" + donorFirstname + ", donorLastname=" + donorLastname
-				+ ", donorAvailability=" + donorAvailability + ", bloodBank=" + bloodBank + ", account=" + account
-				+ "]";
+		return  donorFirstname + " " + donorLastname
+				+ " availability: " + donorAvailability + "bloodType: " + bloodBank.getBloodType();
 	}
 
 
@@ -119,7 +116,7 @@ public class Donor {
 		private String donorLastname;
 		private String donorAvailability;
 		private BloodBank bloodBank;
-		private Account account;
+		private List<Account> accounts;
 
 		public DonorBuilder setDonorId(Integer donorId) {
 			this.donorId = donorId;
@@ -145,13 +142,13 @@ public class Donor {
 			this.bloodBank = bloodBank;
 			return this;
 		}
-		public DonorBuilder setDonorAccount(Account account) {
-			this.account = account;
+		public DonorBuilder setDonorAccount(List<Account> accounts) {
+			this.accounts = accounts;
 			return this;
 		}
 
 		public Donor build() {
-			return new Donor(donorId, donorFirstname, donorLastname, donorAvailability, bloodBank, account);
+			return new Donor(donorId, donorFirstname, donorLastname, donorAvailability, bloodBank, accounts);
 		}
 	}
 

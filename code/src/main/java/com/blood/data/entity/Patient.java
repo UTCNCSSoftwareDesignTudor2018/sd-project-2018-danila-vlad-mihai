@@ -1,5 +1,7 @@
 package com.blood.data.entity;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -7,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -27,18 +30,21 @@ public class Patient {
 	@Column
 	private String patientLastname;
 	
-	 @OneToOne(fetch=FetchType.EAGER)
-	 @Fetch(FetchMode.JOIN)
-	 @JoinColumn(name="patient_id")
-    private Account account;
+	@OneToMany(mappedBy = "patient", fetch = FetchType.EAGER)
+	private List<Account> accounts;
 
 	
-	public Patient(int patientId, String patientFirstname, String patientLastname, Account account) {
+	 
+	public Patient() {
+
+	}
+
+	public Patient(int patientId, String patientFirstname, String patientLastname, List<Account> accounts) {
 		super();
 		this.patientId = patientId;
 		this.patientFirstname = patientFirstname;
 		this.patientLastname = patientLastname;
-		this.account = account;
+		this.accounts = accounts;
 	}
 
 	public int getPatientId() {
@@ -65,24 +71,25 @@ public class Patient {
 		this.patientLastname = patientLastname;
 	}
 
-	public Account getAccount() {
-		return account;
+
+	public List<Account> getAccounts() {
+		return accounts;
 	}
 
-	public void setAccount(Account account) {
-		this.account = account;
+	public void setAccounts(List<Account> accounts) {
+		this.accounts = accounts;
 	}
 
 	@Override
 	public String toString() {
 		return "Patient [patientId=" + patientId + ", patientFirstname=" + patientFirstname + ", patientLastname="
-				+ patientLastname + ", account=" + account + "]";
+				+ patientLastname+"]";
 	}
 	public static class PatientBuilder {
 		private int patientId;
 		private String patientFirstname;
 		private String patientLastname;
-	    private Account account;
+	    private List<Account> accounts;
 
 		public PatientBuilder setPatientId(Integer patientId) {
 			this.patientId = patientId;
@@ -99,13 +106,13 @@ public class Patient {
 			return this;
 		}
 
-		public PatientBuilder setPatientAccount(Account account) {
-			this.account = account;
+		public PatientBuilder setPatientAccount(List<Account> accounts) {
+			this.accounts = accounts;
 			return this;
 		}
 
 		public Patient build() {
-			return new Patient(patientId, patientFirstname, patientLastname, account);
+			return new Patient(patientId, patientFirstname, patientLastname, accounts);
 		}
 	}
 	

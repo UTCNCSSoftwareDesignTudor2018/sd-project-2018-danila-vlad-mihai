@@ -20,7 +20,7 @@ public class BloodBank {
 	private int bloodId;
 	@Column
 	private String bloodType;
-	@OneToMany(mappedBy = "donor_id", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "bloodBank", fetch = FetchType.EAGER)
 	private List<Donor> donors;
 
 	public BloodBank() {

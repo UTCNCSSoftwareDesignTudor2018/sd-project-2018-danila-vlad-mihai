@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,7 +21,7 @@ public class Address {
 	@Column
 	private String addressName;
 
-	@ManyToMany(mappedBy = "addresses")
+	@ManyToMany(mappedBy = "addresses",fetch = FetchType.EAGER)
 	private List<Account> accounts;
 
 	public Address() {
@@ -53,7 +54,7 @@ public class Address {
 
 	@Override
 	public String toString() {
-		return "Address [addressId=" + addressId + ", addressName=" + addressName + ", accounts=" + accounts + "]";
+		return "Address: " + addressName ;
 	}
 
 }

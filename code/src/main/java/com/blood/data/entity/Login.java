@@ -6,19 +6,24 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 
 @Entity
 @Table(name = "logins")
 public class Login {
-	@Id
-	@Column
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	
+	
+	  @Id
+	    @GeneratedValue(generator = "foreigngen")
+	    @GenericGenerator(strategy = "foreign", name="foreigngen",
+	            parameters = @Parameter(name = "property", value="account"))
+	  @Column(name = "login_id")
 	private int loginId;
 	
 	@Column
@@ -26,12 +31,9 @@ public class Login {
 	
 	@Column
 	private String loginPassword;
-	
-	 @OneToOne(fetch=FetchType.EAGER)
-	 @Fetch(FetchMode.JOIN)
-	 @JoinColumn(name="login_id")
-    private Account account;
-	
+	@OneToOne(optional=false, mappedBy="login",fetch=FetchType.EAGER)
+	@Fetch(FetchMode.JOIN)
+	private Account account;
 	public Login() {
 		
 	}
@@ -69,8 +71,7 @@ public class Login {
 
 	@Override
 	public String toString() {
-		return "Login [loginId=" + loginId + ", loginUsername=" + loginUsername + ", loginPassword=" + loginPassword
-				+ ", account=" + account + "]";
+		return "loginId: " + loginId + ", loginUsername: " + loginUsername + ", loginPassword: " + loginPassword;
 	}
 	
 	
