@@ -13,9 +13,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
 @Entity
 @Table(name = "donors")
 public class Donor {
@@ -23,23 +20,23 @@ public class Donor {
 	@Column
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int donorId;
-	
+
 	@Column
 	private String donorFirstname;
-	
+
 	@Column
 	private String donorLastname;
-	
+
 	@Column
 	private String donorAvailability;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "bloodbank_id")
 	private BloodBank bloodBank;
 
 	@OneToMany(mappedBy = "donor", fetch = FetchType.EAGER)
 	private List<Account> accounts;
-	
+
 	public Donor() {
 	}
 
@@ -104,11 +101,9 @@ public class Donor {
 
 	@Override
 	public String toString() {
-		return  donorFirstname + " " + donorLastname
-				+ " availability: " + donorAvailability + "bloodType: " + bloodBank.getBloodType();
+		return donorFirstname + " " + donorLastname + " availability: " + donorAvailability + "bloodType: "
+				+ bloodBank.getBloodType();
 	}
-
-
 
 	public static class DonorBuilder {
 		private int donorId;
@@ -118,31 +113,32 @@ public class Donor {
 		private BloodBank bloodBank;
 		private List<Account> accounts;
 
-		public DonorBuilder setDonorId(Integer donorId) {
+		public DonorBuilder donorId(Integer donorId) {
 			this.donorId = donorId;
 			return this;
 		}
 
-		public DonorBuilder setDonorFirstname(String donorFirstname) {
+		public DonorBuilder donorFirstname(String donorFirstname) {
 			this.donorFirstname = donorFirstname;
 			return this;
 		}
 
-		public DonorBuilder setDonorLastname(String donorLastname) {
+		public DonorBuilder donorLastname(String donorLastname) {
 			this.donorLastname = donorLastname;
 			return this;
 		}
 
-		public DonorBuilder setDonorAvailability(String donorAvailability) {
+		public DonorBuilder donorAvailability(String donorAvailability) {
 			this.donorAvailability = donorAvailability;
 			return this;
 		}
 
-		public DonorBuilder setDonorBloodBank(BloodBank bloodBank) {
+		public DonorBuilder donorBloodBank(BloodBank bloodBank) {
 			this.bloodBank = bloodBank;
 			return this;
 		}
-		public DonorBuilder setDonorAccount(List<Account> accounts) {
+
+		public DonorBuilder donorAccount(List<Account> accounts) {
 			this.accounts = accounts;
 			return this;
 		}

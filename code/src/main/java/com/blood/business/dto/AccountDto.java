@@ -12,15 +12,28 @@ public class AccountDto {
 	private String accountType;
 	private String accountEmail;
 	List<Address> addresses;
-    private Patient patient;
-    private Login login;
-    private Donor donor;
-    
+	private Patient patient;
+	private Login login;
+	private Donor donor;
+
+	public AccountDto(Login login, String accountEmail) {
+		super();
+		this.login = login;
+		this.accountEmail = accountEmail;
+	}
+
 	public AccountDto(String accountType, String accountEmail, Patient patient) {
 		super();
 		this.accountType = accountType;
 		this.accountEmail = accountEmail;
 		this.patient = patient;
+	}
+
+	public AccountDto(String accountType, String accountEmail, Donor donor) {
+		super();
+		this.accountType = accountType;
+		this.accountEmail = accountEmail;
+		this.donor = donor;
 	}
 
 	public AccountDto(String accountType, String accountEmail, List<Address> addresses, Patient patient, Login login,
@@ -95,6 +108,5 @@ public class AccountDto {
 		return "AccountDto [accountId=" + accountId + ", accountType=" + accountType + ", accountEmail=" + accountEmail
 				+ ", patient=" + patient + ", donor=" + donor + "]";
 	}
-    
-    
+
 }

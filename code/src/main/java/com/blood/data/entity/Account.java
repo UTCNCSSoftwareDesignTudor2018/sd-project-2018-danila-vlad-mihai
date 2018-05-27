@@ -42,8 +42,8 @@ public class Account {
 
 	@OneToOne(fetch = FetchType.EAGER)
 	@PrimaryKeyJoinColumn
-	//@Fetch(FetchMode.JOIN)
-	//@JoinColumn(name = "account_id")
+	// @Fetch(FetchMode.JOIN)
+	// @JoinColumn(name = "account_id")
 	private Login login;
 
 	@ManyToOne
@@ -112,8 +112,7 @@ public class Account {
 
 	@Override
 	public String toString() {
-		return "Account [accountId=" + accountId + ", accountType=" + accountType + ", accountEmail=" + accountEmail
-				+ "]";
+		return "type: " + accountType + ", email:" + accountEmail + " " + addresses;
 	}
 
 }

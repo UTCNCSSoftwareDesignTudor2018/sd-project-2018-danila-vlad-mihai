@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.blood.data.entity.AccountAddress;
 
 @Repository
-public interface AccountAddressRepository extends JpaRepository<AccountAddress, Integer>{
-	
+public interface AccountAddressRepository extends JpaRepository<AccountAddress, Integer> {
+
 }

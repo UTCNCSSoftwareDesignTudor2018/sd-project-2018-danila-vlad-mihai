@@ -5,8 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import com.blood.data.entity.Address;
 
-
 @Repository
 public interface AddressRepository extends JpaRepository<Address, Integer> {
-
+	public Address findByAddressName(String name);
 }

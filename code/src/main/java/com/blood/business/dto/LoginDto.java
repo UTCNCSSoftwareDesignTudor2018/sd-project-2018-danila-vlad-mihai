@@ -3,16 +3,16 @@ package com.blood.business.dto;
 import com.blood.data.entity.Account;
 
 public class LoginDto {
-	
+
 	private int loginId;
 	private String loginUsername;
 	private String loginPassword;
-    private Account account;
-    
-    public LoginDto() {
-    	
-    }
-    
+	private Account account;
+
+	public LoginDto() {
+
+	}
+
 	public LoginDto(int loginId, String loginUsername, String loginPassword, Account account) {
 		super();
 		this.loginId = loginId;
@@ -20,7 +20,7 @@ public class LoginDto {
 		this.loginPassword = loginPassword;
 		this.account = account;
 	}
-	
+
 	public LoginDto(String loginUsername, String loginPassword) {
 		super();
 		this.loginUsername = loginUsername;
@@ -58,6 +58,5 @@ public class LoginDto {
 	public void setAccount(Account account) {
 		this.account = account;
 	}
-    
 
 }

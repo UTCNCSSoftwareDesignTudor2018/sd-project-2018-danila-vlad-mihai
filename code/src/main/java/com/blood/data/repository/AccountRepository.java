@@ -5,9 +5,8 @@ import org.springframework.stereotype.Repository;
 
 import com.blood.data.entity.Account;
 
-
 @Repository
-public interface AccountRepository extends JpaRepository<Account, Integer>{
+public interface AccountRepository extends JpaRepository<Account, Integer> {
 	public Account findByAccountId(int id);
 
 }

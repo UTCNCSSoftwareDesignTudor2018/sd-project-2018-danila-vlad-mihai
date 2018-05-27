@@ -6,24 +6,24 @@ import com.blood.data.entity.Account;
 import com.blood.data.entity.BloodBank;
 
 public class DonorDto {
-	
+
 	private int donorId;
 	private String donorFirstname;
 	private String donorLastname;
 	private String donorAvailability;
 	private BloodBank bloodBank;
 	private List<Account> accounts;
-	
+
 	public DonorDto() {
-		
+
 	}
 
-	public DonorDto(Integer donorId, String donorFirstname, String donorLastname, String donorAvailability) {
+	public DonorDto(String donorFirstname, String donorLastname, String donorAvailability, BloodBank bloodBank) {
 		super();
-		this.donorId = donorId;
 		this.donorFirstname = donorFirstname;
 		this.donorLastname = donorLastname;
 		this.donorAvailability = donorAvailability;
+		this.bloodBank = bloodBank;
 	}
 
 	public int getDonorId() {
@@ -57,7 +57,7 @@ public class DonorDto {
 	public void setDonorAvailability(String donorAvailability) {
 		this.donorAvailability = donorAvailability;
 	}
-	
+
 	public BloodBank getBloodBank() {
 		return bloodBank;
 	}
@@ -76,10 +76,8 @@ public class DonorDto {
 
 	@Override
 	public String toString() {
-		return  donorFirstname + " " + donorLastname
-				+ " availability: " + donorAvailability + " bloodType: " + bloodBank.getBloodType() + " email:" + accounts.get(0).getAccountEmail();
+		return donorFirstname + " " + donorLastname + " availability: " + donorAvailability + " bloodType: "
+				+ bloodBank.getBloodType() + accounts;
 	}
-	
-	
-	
+
 }

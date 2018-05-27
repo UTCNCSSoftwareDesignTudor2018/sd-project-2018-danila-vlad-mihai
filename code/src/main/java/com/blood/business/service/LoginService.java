@@ -15,24 +15,26 @@ public class LoginService {
 	public LoginDto getLogin(String username, String password) {
 		LoginDto loginDto = new LoginDto();
 		loginDto.setLoginId(loginRepository.findByLoginUsernameAndLoginPassword(username, password).getLoginId());
-		loginDto.setLoginPassword(loginRepository.findByLoginUsernameAndLoginPassword(username, password).getLoginPassword());
-		loginDto.setLoginUsername(loginRepository.findByLoginUsernameAndLoginPassword(username, password).getLoginUsername());
+		loginDto.setLoginPassword(
+				loginRepository.findByLoginUsernameAndLoginPassword(username, password).getLoginPassword());
+		loginDto.setLoginUsername(
+				loginRepository.findByLoginUsernameAndLoginPassword(username, password).getLoginUsername());
 		loginDto.setAccount(loginRepository.findByLoginUsernameAndLoginPassword(username, password).getAccount());
 		return loginDto;
 	}
-	
+
 	public void updateLoginPassword(int id, String password) {
 		Login login = loginRepository.findByLoginId(id);
 		login.setLoginPassword(password);
 		System.out.println(login);
 		loginRepository.save(login);
 	}
-	
+
 	public void deleteLogin(int id) {
 		Login login = loginRepository.findByLoginId(id);
 		loginRepository.delete(login);
 	}
-	
+
 	public void createLogin(LoginDto loginDto) {
 		Login login = new Login();
 		login.setLoginPassword(loginDto.getLoginPassword());

@@ -64,4 +64,9 @@ public class PatientDto {
 		this.accounts = accounts;
 	}
 
+	@Override
+	public String toString() {
+		return patientFirstname + " " + patientLastname + ", address: " + accounts;
+	}
+
 }
