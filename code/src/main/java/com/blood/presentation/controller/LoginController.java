@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import com.blood.business.dto.AccountAddressDto;
 import com.blood.business.dto.AccountDto;
 import com.blood.business.dto.AddressDto;
+import com.blood.business.dto.BloodBankDto;
 import com.blood.business.dto.DonorDto;
 import com.blood.business.dto.LoginDto;
 import com.blood.business.dto.PatientDto;
@@ -20,6 +21,7 @@ import com.blood.business.service.AccountService;
 import com.blood.business.service.DonorService;
 import com.blood.business.service.LoginService;
 import com.blood.business.service.PatientService;
+import com.blood.business.validator.BloodGroupValidator;
 import com.blood.business.validator.PasswordValidator;
 import com.blood.business.validator.Validator;
 import com.blood.presentation.view.DonorView;
@@ -42,7 +44,8 @@ public class LoginController {
 	DonorService donorService;
 	LoginDto loginDto = new LoginDto();
 
-	private static List<Validator<LoginDto>> validators;
+	private static List<Validator<LoginDto>> loginValidators;
+	private static List<Validator<BloodBankDto>> bloodValidators;
 
 	public LoginController(LoginView loginView) {
 		this.loginView = loginView;
@@ -50,8 +53,10 @@ public class LoginController {
 		loginView.setDonorLoginListener(new DonorLoginListener());
 		loginView.setCreateDonorListener(new CreateDonorListener());
 		loginView.setCreatePatientListener(new CreatePatientListener());
-		validators = new ArrayList<Validator<LoginDto>>();
-		validators.add(new PasswordValidator());
+		loginValidators = new ArrayList<Validator<LoginDto>>();
+		bloodValidators = new ArrayList<Validator<BloodBankDto>>();
+		loginValidators.add(new PasswordValidator());
+		bloodValidators.add(new BloodGroupValidator());
 	}
 
 	public void setLoginView(LoginView loginView) {
@@ -215,6 +220,8 @@ public class LoginController {
 					address = loginView.donorAddressText.getText();
 
 					PasswordValidator passwordValidator = new PasswordValidator();
+					BloodGroupValidator bloodValidator = new BloodGroupValidator();
+
 					LoginDto loginDto = new LoginDto(username, password);
 
 					if (loginView.checkbox.isSelected())
@@ -222,10 +229,13 @@ public class LoginController {
 					else
 						availability = "false";
 					bloodType = loginView.donorBloodTypeText.getText();
+					BloodBankDto bloodBankDto = new BloodBankDto();
+					bloodBankDto.setBloodType(bloodType);
 
-					if (passwordValidator.validate(loginDto)) {
+					if (passwordValidator.validate(loginDto) && bloodValidator.validate(bloodBankDto)) {
 						DonorDto donorDto = new DonorDto(firstname, lastname, availability,
 								donorService.getBloodBank(bloodType));
+
 						AccountDto accountDto = new AccountDto("donor", email, donorService.createDonor(donorDto));
 
 						loginDto.setAccount(accountService.createAccount(accountDto));
@@ -244,7 +254,7 @@ public class LoginController {
 
 					} else {
 						JOptionPane.showMessageDialog(loginView.panelLogin,
-								"Invalid input! Please make sure that the password contains: uppercase letter, lowercase letter, digit!",
+								"Invalid input! Please make sure that:\n-The password contains uppercase letter, lowercase letter, digit\n-Blood group is one of type: A-, A+, B-, B+, AB+, AB-, 0-, 0+",
 								"Error", JOptionPane.ERROR_MESSAGE);
 					}
 				} else {
